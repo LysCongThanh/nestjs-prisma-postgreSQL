@@ -14,9 +14,24 @@ datasource db {
 }
 
 model user {
-  id             Int      @default(autoincrement())
+  id             Int      @unique @default(autoincrement())
   email          String   @unique
   hashedPassword String
+  first_name     String?
+  last_name      String?
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
+
+  contacts contact[]
+}
+
+model contact {
+  id         Int      @unique @default(autoincrement())
+  user_id    Int
+  user       user     @relation(fields: [user_id], references: [id])
+  name       String?
+  telephone  String?
+  company    String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
