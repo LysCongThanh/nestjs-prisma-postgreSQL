@@ -10,7 +10,7 @@ export class CorsModule implements NestModule {
     consumer
       .apply(
         cors({
-          origin: `https://${this.configService.get('RAILWAY_PUBLIC_DOMAIN')}`,
+          origin: `255.255.255.255`,
           methods: 'GET,POST,PUT,DELETE,PATCH',
           allowedHeaders: 'Content-Type,Authorization',
         }),
