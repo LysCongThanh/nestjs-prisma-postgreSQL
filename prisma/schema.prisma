@@ -28,10 +28,31 @@ model user {
 model contact {
   id         Int      @unique @default(autoincrement())
   user_id    Int
-  user       user     @relation(fields: [user_id], references: [id])
+  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   name       String?
   telephone  String?
   company    String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  groups group_contact[]
+}
+
+model group {
+  it         Int      @unique @default(autoincrement())
+  group_name String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  contacts group_contact[]
+}
+
+model group_contact {
+  id         Int      @unique @default(autoincrement())
+  contact    contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contactId  Int?
+  group      group?   @relation(fields: [groupIt], references: [it], onDelete: Cascade)
+  groupIt    Int?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

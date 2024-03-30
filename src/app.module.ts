@@ -4,6 +4,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import * as cors from 'cors';
+import { AuthController } from './auth/auth.controller';
+import * as cookieParser from 'cookie-parser';
+import { ContactModule } from './contact/contact.module';
+import { CsrfMiddleware } from './middlewares/csrf.middleware';
 
 @Module({
   imports: [
@@ -13,18 +17,12 @@ import * as cors from 'cors';
       isGlobal: true,
     }),
     UserModule,
+    ContactModule,
   ],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): any {
-    consumer
-      .apply(
-        cors({
-          origin: 'https://youtube.com',
-          methods: 'GET,POST,PUT,DELETE,PATCH',
-          allowedHeaders: ['content-type'],
-        }),
-      )
-      .forRoutes('*');
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(cookieParser()).forRoutes('*');
+    // consumer.apply(CsrfMiddleware).forRoutes('*');
   }
 }
