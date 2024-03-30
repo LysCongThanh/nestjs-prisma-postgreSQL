@@ -7,7 +7,7 @@ async function bootstrap() {
     origin: false,
     credentials: true,
   });
-  app.listen(3001);
+  app.listen(process.env.PORT);
 }
 
 bootstrap();
