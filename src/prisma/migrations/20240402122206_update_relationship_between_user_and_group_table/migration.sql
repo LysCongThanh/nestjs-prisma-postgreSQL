@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "group" ADD COLUMN     "userId" INTEGER NOT NULL DEFAULT 8;
+
+-- AddForeignKey
+ALTER TABLE "group" ADD CONSTRAINT "group_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
