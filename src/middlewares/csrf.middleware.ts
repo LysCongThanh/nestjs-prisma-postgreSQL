@@ -1,6 +1,6 @@
 import { NestMiddleware } from '@nestjs/common';
 import * as csurf from 'csurf';
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 export class CsrfMiddleware implements NestMiddleware {
   private csrfProtection = csurf({ cookie: true });
