@@ -22,6 +22,7 @@ model user {
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
 
+  groups   group[]
   contacts contact[]
 }
 
@@ -39,20 +40,22 @@ model contact {
 }
 
 model group {
-  it         Int      @unique @default(autoincrement())
+  id         Int      @unique @default(autoincrement())
   group_name String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   contacts group_contact[]
+  user     user?           @relation(fields: [userId], references: [id])
+  userId   Int
 }
 
 model group_contact {
   id         Int      @unique @default(autoincrement())
   contact    contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
   contactId  Int?
-  group      group?   @relation(fields: [groupIt], references: [it], onDelete: Cascade)
-  groupIt    Int?
+  group      group?   @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId    Int?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
